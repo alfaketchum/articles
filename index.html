@@ -3,17 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var password = "yourpassword"; // Change this to your password
-        var userInput = prompt("Enter Password:");
-
-        if (userInput !== password) {
-            alert("Incorrect password!");
-            document.body.innerHTML = ""; // Clears the page content
-        }
-    });
-</script>
+   <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var password = "yourpassword"; // Change this to your password
+            var userInput;
+            
+            while (userInput !== password) {
+                userInput = prompt("Enter Password:");
+                if (userInput === null) { // If user clicks "Cancel"
+                    alert("Access Denied");
+                    document.body.innerHTML = ""; // Clears content
+                    return;
+                }
+            }
+        });
+    </script>
     <title>Articles I Read</title>
 </head>
 <body>
