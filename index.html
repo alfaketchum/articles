@@ -3,6 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var password = "yourpassword"; // Change this to your password
+        var userInput = prompt("Enter Password:");
+
+        if (userInput !== password) {
+            alert("Incorrect password!");
+            document.body.innerHTML = ""; // Clears the page content
+        }
+    });
+</script>
     <title>Articles I Read</title>
 </head>
 <body>
