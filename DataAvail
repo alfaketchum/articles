@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Availability and Modular Blockchains</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #3498db;
+            margin-top: 25px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .highlight {
+            background-color: #e8f4fc;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+        }
+        ul, ol {
+            padding-left: 25px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Data Availability and Modular Blockchains</h1>
+
+    <h2>Core Concepts of Data Availability</h2>
+    <p>Data availability refers to the guarantee that all transaction data used to update the blockchain state is published and accessible to network participants. This is crucial because:</p>
+    <ol>
+        <li><strong>Verification Requirement</strong>: Nodes need access to transaction data to verify state transitions</li>
+        <li><strong>Censorship Resistance</strong>: Prevents hidden or withheld data that could enable attacks</li>
+        <li><strong>Trustless Operation</strong>: Allows anyone to reconstruct the chain's state independently</li>
+    </ol>
+
+    <h3>The Fundamental Problem</h3>
+    <p>The data availability problem asks: "How can we be sure that all transaction data was actually published to the network?"</p>
+    <p>This is distinct from data storage because:</p>
+    <ul>
+        <li><strong>Storage</strong> concerns long-term persistence of data</li>
+        <li><strong>Availability</strong> concerns whether data was published at all</li>
+    </ul>
+
+    <h2>Modular Blockchain Architecture</h2>
+
+    <h3>Traditional Monolithic Design</h3>
+    <p>Traditional blockchains like Bitcoin and Ethereum (pre-rollup era) handle four core functions in a single layer:</p>
+    <ol>
+        <li><strong>Execution</strong>: Processing transactions</li>
+        <li><strong>Settlement</strong>: Finalizing state changes</li>
+        <li><strong>Consensus</strong>: Agreeing on transaction order</li>
+        <li><strong>Data Availability</strong>: Ensuring transaction data is published</li>
+    </ol>
+
+    <h3>Modular Design</h3>
+    <p>Modular blockchains separate these functions into specialized layers:</p>
+    <table>
+        <tr>
+            <th>Layer</th>
+            <th>Function</th>
+            <th>Examples</th>
+        </tr>
+        <tr>
+            <td><strong>Execution</strong></td>
+            <td>Process transactions</td>
+            <td>Arbitrum, Optimism, zkSync</td>
+        </tr>
+        <tr>
+            <td><strong>Settlement</strong></td>
+            <td>Finalize state changes</td>
+            <td>Ethereum (for rollups)</td>
+        </tr>
+        <tr>
+            <td><strong>Consensus</strong></td>
+            <td>Order transactions</td>
+            <td>Ethereum, Celestia</td>
+        </tr>
+        <tr>
+            <td><strong>Data Availability</strong></td>
+            <td>Ensure data is published</td>
+            <td>Celestia, EigenDA, Avail</td>
+        </tr>
+    </table>
+
+    <h2>Why Outsource Data Availability?</h2>
+    <p>Blockchains can outsource data availability for several compelling reasons:</p>
+
+    <h3>1. Scaling Benefits</h3>
+    <ul>
+        <li>Reduces on-chain data storage requirements</li>
+        <li>Lowers gas costs for users</li>
+        <li>Enables higher transaction throughput</li>
+    </ul>
+
+    <h3>2. Specialization</h3>
+    <ul>
+        <li>Purpose-built systems optimize for data availability</li>
+        <li>More efficient sampling and verification techniques</li>
+        <li>Better economic models for data providers</li>
+    </ul>
+
+    <h3>3. Resource Allocation</h3>
+    <ul>
+        <li>Execution chains focus on computation</li>
+        <li>Settlement layers focus on security</li>
+        <li>DA layers focus on data distribution</li>
+    </ul>
+
+    <h3>4. Customization</h3>
+    <ul>
+        <li>Different applications have different DA requirements</li>
+        <li>Flexible security vs. cost tradeoffs</li>
+        <li>Ability to choose appropriate DA solution</li>
+    </ul>
+
+    <h2>Data Availability Attacks</h2>
+
+    <h3>Attack Mechanism</h3>
+    <p>In a data availability attack:</p>
+    <ol>
+        <li>A block producer creates a valid block</li>
+        <li>They withhold some or all of the transaction data</li>
+        <li>They publish only the block header and state transitions</li>
+        <li>Other nodes cannot verify the validity of state transitions</li>
+        <li>The attacker can potentially execute invalid state changes</li>
+    </ol>
+
+    <h3>Real-World Implications</h3>
+    <p>This attack is particularly dangerous because:</p>
+    <ul>
+        <li>Light clients can't detect the attack (headers look valid)</li>
+        <li>Full nodes can detect missing data but can't prove the attack to others</li>
+        <li>The attack enables other exploits like double-spending</li>
+    </ul>
+
+    <h2>Data Availability Solutions</h2>
+
+    <h3>Data Availability Sampling (DAS)</h3>
+    <p>DAS allows nodes to verify data availability without downloading the entire block:</p>
+
+    <h4>1. How It Works</h4>
+    <ul>
+        <li>Data is erasure-coded (expanded with redundancy)</li>
+        <li>Nodes randomly sample small portions of the block</li>
+        <li>If all samples are available, the entire block is likely available</li>
+        <li>Mathematical guarantees based on coding theory</li>
+    </ul>
+
+    <h4>2. Key Benefits</h4>
+    <ul>
+        <li>Light clients can verify availability</li>
+        <li>Scales to large block sizes</li>
+        <li>High probability guarantees with minimal data</li>
+    </ul>
+
+    <h4>3. Implementation</h4>
+    <ul>
+        <li>Celestia pioneered this approach</li>
+        <li>Uses 2D Reed-Solomon coding</li>
+        <li>Requires only logarithmic sampling relative to block size</li>
+    </ul>
+
+    <h3>Why DAS Works</h3>
+    <p>DAS works because:</p>
+    <ol>
+        <li>Erasure coding expands data so even if some parts are missing, the original can be recovered</li>
+        <li>If an attacker withholds even a small portion of data, random sampling will detect it with high probability</li>
+        <li>The larger the erasure coding factor, the stronger the security guarantees</li>
+    </ol>
+
+    <h2>Data Availability Layers</h2>
+
+    <h3>Dedicated DA Layers</h3>
+    <p>Several specialized DA layers have emerged:</p>
+
+    <h4>1. Celestia</h4>
+    <ul>
+        <li>Purpose-built for data availability</li>
+        <li>Uses DAS with 2D Reed-Solomon coding</li>
+        <li>Focuses exclusively on ordering and publishing data</li>
+        <li>Minimal execution capabilities</li>
+    </ul>
+
+    <h4>2. EigenDA</h4>
+    <ul>
+        <li>Ethereum-based distributed DA network</li>
+        <li>Uses Distributed Verification Algorithm (DVA)</li>
+        <li>Leverages ETH staking for economic security</li>
+        <li>Optimized for rollup data</li>
+    </ul>
+
+    <h4>3. Avail</h4>
+    <ul>
+        <li>Application-specific DA layer</li>
+        <li>Uses KZG commitments and DAS</li>
+        <li>Light client focused design</li>
+    </ul>
+
+    <h3>Ethereum as DA Layer</h3>
+    <p>Ethereum itself serves as a DA layer for rollups:</p>
+    <ul>
+        <li>Data is posted as calldata</li>
+        <li>Relatively expensive but leverages Ethereum's security</li>
+        <li>Limited by Ethereum's data capacity</li>
+    </ul>
+
+    <h2>Data Availability vs. Data Storage</h2>
+    <p>The critical distinction:</p>
+    <table>
+        <tr>
+            <th>Aspect</th>
+            <th>Data Availability</th>
+            <th>Data Storage</th>
+        </tr>
+        <tr>
+            <td><strong>Primary Concern</strong></td>
+            <td>Was all data published?</td>
+            <td>Is data retrievable long-term?</td>
+        </tr>
+        <tr>
+            <td><strong>Timeframe</strong></td>
+            <td>At block production time</td>
+            <td>Indefinite future</td>
+        </tr>
+        <tr>
+            <td><strong>Verification</strong></td>
+            <td>Probabilistic sampling</td>
+            <td>Deterministic retrieval</td>
+        </tr>
+        <tr>
+            <td><strong>Cost Model</strong></td>
+            <td>Pay once for publication</td>
+            <td>Pay ongoing for persistence</td>
+        </tr>
+        <tr>
+            <td><strong>Security Goal</strong></td>
+            <td>Prevent withholding attacks</td>
+            <td>Prevent data loss</td>
+        </tr>
+    </table>
+
+    <p>This is why the phrase "it's not about data storage but making sure the data is there" is accurate. DA concerns the initial publication, not long-term persistence.</p>
+
+    <h2>Economic Models for Data Availability</h2>
+    <p>DA layers employ various economic models:</p>
+    <ol>
+        <li><strong>Pay-per-byte</strong>: Users pay based on data volume</li>
+        <li><strong>Staking requirements</strong>: Validators stake assets as security</li>
+        <li><strong>Proof of capacity</strong>: Providers prove they're storing data</li>
+        <li><strong>Sampling incentives</strong>: Rewards for participating in DAS</li>
+    </ol>
+    <p>These models create economic incentives to ensure data remains available.</p>
+
+    <h2>Modular Stack Examples</h2>
+    <p>Several modular blockchain stacks leverage specialized DA layers:</p>
+
+    <h3>1. Optimism/Base + EigenDA</h3>
+    <ul>
+        <li>Execution: Optimism/Base</li>
+        <li>Settlement: Ethereum</li>
+        <li>DA: EigenDA</li>
+    </ul>
+
+    <h3>2. Rollkit + Celestia</h3>
+    <ul>
+        <li>Execution: Custom rollkit chains</li>
+        <li>Settlement: Various options</li>
+        <li>DA: Celestia</li>
+    </ul>
+
+    <h3>3. Polygon zkEVM + Avail</h3>
+    <ul>
+        <li>Execution: Polygon zkEVM</li>
+        <li>Settlement: Ethereum</li>
+        <li>DA: Avail</li>
+    </ul>
+
+    <h2>Future Trends in Data Availability</h2>
+    <p>The DA landscape continues to evolve:</p>
+    <ol>
+        <li><strong>Hybrid Solutions</strong>: Combining on-chain and off-chain DA</li>
+        <li><strong>DA Marketplaces</strong>: Competitive pricing for DA services</li>
+        <li><strong>Recursive Proofs</strong>: Using ZK proofs to enhance DA guarantees</li>
+        <li><strong>Cross-DA Bridging</strong>: Interoperability between DA layers</li>
+        <li><strong>Application-Specific DA</strong>: Tailored solutions for different use cases</li>
+    </ol>
+
+    <h2>Practical Implications</h2>
+    <p>For developers and users:</p>
+    <ol>
+        <li><strong>Cost Tradeoffs</strong>: Different DA solutions offer varying cost structures</li>
+        <li><strong>Security Assumptions</strong>: Each DA approach has different trust models</li>
+        <li><strong>Latency Impact</strong>: DA choices affect finality times</li>
+        <li><strong>Composability</strong>: How DA choices affect interaction with other protocols</li>
+        <li><strong>Regulatory Considerations</strong>: Data publication has compliance implications</li>
+    </ol>
+
+    <div class="highlight">
+        <p>The modular blockchain paradigm, with specialized data availability layers, represents a fundamental shift in blockchain architecture that enables unprecedented scaling while maintaining security guarantees through innovative cryptographic techniques.</p>
+    </div>
+</body>
+</html>
