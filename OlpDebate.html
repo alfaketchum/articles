@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scaling Real World Asset (RWA) Perpetuals in Crypto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #ecf0f1;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        code {
+            background-color: #e8e8e8;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Scaling Real World Asset (RWA) Perpetuals in Crypto: Models, Challenges, and Strategic Design Paths</h1>
+
+<h2>Executive Summary</h2>
+<p>Real World Asset (RWA) perpetuals — crypto-native derivatives that track the prices of real-world commodities, currencies, and financial assets — are emerging as a major growth sector in decentralized finance. Ostium and other early platforms have seen rapid growth in TVL and volume, indicating strong demand. However, scaling RWA perps sustainably raises critical design questions around liquidity, pricing efficiency, capital efficiency, and user experience.</p>
+
+<h2>Background: The Rise of RWA Perpetuals</h2>
+<p>Macroeconomic volatility — including tariffs, currency instability, and stock market swings — has driven a surge of interest in crypto derivatives tied to real-world assets:</p>
+<ul>
+<li>Ostium's deposits grew from less than $6M to over $60M in just one month.</li>
+<li>HyperLiquid listed PAXG (tokenized gold) as a perpetual trading asset.</li>
+<li>Trading volumes surged dramatically across these venues.</li>
+</ul>
+
+<h2>Initial Critique of Current RWA Perpetual Models</h2>
+<p>A critic raised significant concerns about current RWA perpetual platforms:</p>
+<ul>
+<li>Funding rates on Ostium's gold pair (XAU/USD) ranged between 30% to 13% — much higher than real-world hedging costs (6% via CME).</li>
+<li>Delta-neutral trading is discouraged because of the GLP model — traders can't profit from funding rates efficiently.</li>
+<li>The GLP/OLP model forces a zero-sum game: traders must lose for LPs to win, creating unsustainable dynamics at scale.</li>
+<li>Compared to competitors like HyperLiquid, Ostium has lower open interest in gold markets and higher concentration risk in its pool.</li>
+</ul>
+
+<h3>Original Critic's Proposal</h3>
+<ul>
+<li>Transition Ostium to a full Central Limit Order Book (CLOB) model to enable real market pricing and attract liquidity providers over time.</li>
+<li>Use true market-driven funding rates rather than protocol-controlled rates.</li>
+<li>Facilitate more decentralized and organic price discovery.</li>
+</ul>
+
+<h2>Ostium Official's First Response</h2>
+<p>The Ostium official acknowledged some problems but proposed a different solution:</p>
+<ul>
+<li>Funding rate models based on last 7 days volatility scaling will be replaced with real carry-cost anchored models (e.g., gold at 6%).</li>
+<li>Moving to a CLOB model would worsen liquidity and UX dramatically because RWA perps reference already highly liquid external assets.</li>
+<li>In traditional finance, brokers like eToro and IG offer CFDs without creating their own liquidity; they reference deep external liquidity and manage risk internally — crypto RWA venues should adopt the same model.</li>
+<li>Thin, fragmented orderbooks are impractical for scaling in low-demand markets like RWAs in crypto.</li>
+<li>Focus should be on creating synthetic trading with backend hedging, not building new native markets from scratch.</li>
+</ul>
+
+<h2>Understanding Traditional Finance Models</h2>
+<h3>CFDs in TradFi</h3>
+<p>Contracts for Difference (CFDs) allow users to speculate on asset price movements without owning the underlying asset. Brokers reference deep markets like CME, NYSE, or LME, and internally manage exposure through dynamic hedging. Users experience simplified trading without direct exchange interaction.</p>
+
+<h3>How eToro and IG Work</h3>
+<p>These brokers:
+<ul>
+<li>Do not create native orderbooks for assets.</li>
+<li>Reference external exchange prices.</li>
+<li>Manage client risk via internal balancing and selective hedging strategies.</li>
+<li>Focus on execution quality and broad access, not market creation.</li>
+</ul>
+</p>
+
+<h2>Original Critic's Second Response</h2>
+<p>Further arguments against Ostium's view:</p>
+<ul>
+<li>Protocol-level price management can never be as efficient as open markets.</li>
+<li>Synthetics still rely on centralized control of reference prices.</li>
+<li>Fragmented orderbooks can help sophisticated traders protect alpha.</li>
+<li>The user base today is degens, not institutions; catering to degens is essential.</li>
+<li>Capital efficiency is unlikely to ever be solved within a pure pool model unless external hedging is fully implemented.</li>
+</ul>
+
+<h2>Ostium's Detailed Clarifications</h2>
+<ul>
+<li>Funding rates will better match traditional market carry costs soon.</li>
+<li>Prices on Ostium are based on the most liquid orderbooks globally (e.g., CME, Binance).</li>
+<li>Ostium can instantly list any pair without needing to bootstrap fresh liquidity.</li>
+<li>Discretionary hedging is planned for OLP pools, allowing dynamic exposure management, similar to HyperLiquid's HLP model.</li>
+<li>Large "degens" (7–8 figure portfolios) demand deep liquidity and low trading costs, aligning incentives for Ostium to improve execution quality.</li>
+</ul>
+
+<h2>Ostium OLP vs HyperLiquid HLP Comparison</h2>
+<table>
+<tr><th>Feature</th><th>Ostium OLP</th><th>HyperLiquid HLP</th></tr>
+<tr><td>Price Discovery</td><td>External reference prices</td><td>Dynamic modeling + hedging</td></tr>
+<tr><td>Hedging Strategy</td><td>Discretionary hedging planned</td><td>Active real/synthetic asset hedging</td></tr>
+<tr><td>Capital Efficiency</td><td>Limited, improving</td><td>Higher, via dynamic exposure management</td></tr>
+<tr><td>Liquidity Bootstrapping</td><td>Instant pair listings with recycled liquidity</td><td>Initial liquidity requirements</td></tr>
+<tr><td>User Experience</td><td>Simplified, taker-centric</td><td>Balanced funding experiences</td></tr>
+<tr><td>Transparency</td><td>High (price source disclosure)</td><td>Lower (algorithmic hedging hidden)</td></tr>
+<tr><td>Scalability Risk</td><td>Moderate without hedging</td><td>More complexity, better liquidity smoothing</td></tr>
+</table>
+
+<h2>Strategic Recommendations</h2>
+<ul>
+<li>Accelerate discretionary hedging implementation.</li>
+<li>Strengthen reference price reliability using multi-oracle systems.</li>
+<li>Refine funding rate methodologies to anchor on real-world costs.</li>
+<li>Incentivize market maker participation over time.</li>
+<li>Differentiate messaging between small retail users and large portfolio traders.</li>
+</ul>
+
+<h2>Conclusion</h2>
+<p>Crypto RWA platforms must carefully balance liquidity, pricing fairness, user experience, and scalability. While native CLOB models promise full decentralization, synthetic models anchored to deep liquidity sources offer a faster, more user-aligned path in the near term. Ostium’s future success will depend on executing discretionary hedging strategies and matching capital efficiency expectations as the market matures.</p>
+
+<h2>Appendix</h2>
+<h3>CFD Model Summary:</h3>
+<p>CFDs are synthetic contracts allowing traders to bet on asset price changes without owning assets, managed internally by brokers through reference pricing and hedging.</p>
+
+<h3>HyperLiquid HLP Model:</h3>
+<p>HyperLiquid's model dynamically manages liquidity pool exposure through hidden hedging strategies, smoothing funding rates and enabling better capital efficiency while maintaining taker-friendly UX.</p>
+
+</body>
+</html>
