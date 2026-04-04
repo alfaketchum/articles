@@ -1,43 +1,3574 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var password = "yourpassword"; // Change this to your password
-            var userInput;
-            
-            while (userInput !== password) {
-                userInput = prompt("Enter Password:");
-                if (userInput === null) { // If user clicks "Cancel"
-                    alert("Access Denied");
-                    document.body.innerHTML = ""; // Clears content
-                    return;
-                }
-            }
-        });
-    </script>
-    <title>Articles I Read</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LoopLinq — Turn Your Link in Bio into Income</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF5D02;
+    --walnut: #5F2606;
+    --cream: #ffffff;
+    --warm-white: #ffffff;
+    --dark: #1A0E04;
+    --muted: #8C8C8C;
+    --light-tan: #EAEAEA;
+    --glow: transparent;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--dark);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── SCROLL PROGRESS BAR ─── */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: var(--orange);
+    z-index: 200;
+    transition: width 0.1s linear;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  nav.scrolled {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  }
+
+  .logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.5rem;
+    color: white;
+    letter-spacing: -0.02em;
+    transition: color 0.3s ease;
+  }
+
+  .logo span { color: white; transition: color 0.3s ease; }
+
+  nav.scrolled .logo { color: var(--walnut); }
+  nav.scrolled .logo span { color: var(--orange); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-direction: row-reverse;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: color 0.3s ease;
+  }
+
+  .nav-links a:hover { color: white; }
+  nav.scrolled .nav-links a { color: var(--muted); }
+  nav.scrolled .nav-links a:hover { color: var(--walnut); }
+
+  .nav-cta {
+    background: white;
+    color: var(--orange);
+    border: none;
+    padding: 0.65rem 1.5rem;
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.03em;
+  }
+
+  nav.scrolled .nav-cta {
+    background: var(--orange);
+    color: white;
+  }
+
+  .nav-cta:hover {
+    background: var(--walnut);
+    transform: translateY(-1px);
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 6rem 0 0 clamp(2rem, 6vw, 6rem);
+    position: relative;
+    overflow: hidden;
+    background: var(--orange);
+  }
+
+  .hero::before {
+    content: none;
+  }
+
+  .hero::after {
+    content: none;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(30px, -20px); }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding-right: 0;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: white;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .hero-badge::before {
+    content: '🔗';
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    line-height: 1.08;
+    color: white;
+    color: var(--walnut);
+    max-width: 580px;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.4s;
+  }
+
+  .hero h1 em {
+    color: white;
+    font-style: italic;
+    text-decoration: underline;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 440px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.8s;
+  }
+
+  .hero .btn-primary {
+    background: white;
+    color: var(--orange);
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    font-size: 0.95rem;
+    padding: 1rem 2.2rem;
+  }
+
+  .hero .btn-primary:hover {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .hero .btn-ghost {
+    color: white;
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .hero .btn-ghost:hover {
+    border-color: white;
+  }
+
+  /* ─── PHONE MOCKUP ─── */
+  .hero-phone {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 2rem 0;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 0.6s;
+  }
+
+  .phone-frame {
+    position: relative;
+    width: 300px;
+    height: 610px;
+    background: #1a1a1a;
+    border-radius: 44px;
+    padding: 12px;
+    box-shadow:
+      0 40px 80px rgba(0, 0, 0, 0.15),
+      0 0 0 1px rgba(0, 0, 0, 0.08);
+    transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
+  }
+
+  .phone-notch {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 28px;
+    background: #1a1a1a;
+    border-radius: 0 0 18px 18px;
+    z-index: 3;
+  }
+
+  .phone-screen {
+    width: 100%;
+    height: 100%;
+    border-radius: 34px;
+    overflow: hidden;
+    background: white;
+    position: relative;
+  }
+
+  .screen-content {
+    padding: 3rem 1.2rem 1.2rem;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .screen-header-img {
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(135deg, var(--orange), var(--walnut));
+    border-radius: 14px;
+    margin-bottom: 0.8rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .screen-header-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+    display: block;
+  }
+
+  .screen-header-img::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to top, rgba(0,0,0,0.25), transparent);
+  }
+
+  .screen-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange), #FF8A40);
+    margin: -24px auto 0.4rem;
+    position: relative;
+    z-index: 2;
+    border: 3px solid white;
+  }
+
+  .screen-name {
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--dark);
+    margin-bottom: 0.2rem;
+  }
+
+  .screen-handle {
+    text-align: center;
+    font-size: 0.6rem;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+
+  .screen-socials {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .screen-socials .social-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--light-tan);
+  }
+
+  .screen-btn-contact {
+    width: 100%;
+    padding: 0.55rem;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.6rem;
+  }
+
+  .screen-card {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 0.7rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .screen-card .card-title {
+    font-weight: 700;
+    font-size: 0.65rem;
+    color: var(--dark);
+    margin-bottom: 0.15rem;
+  }
+
+  .screen-card .card-meta {
+    font-size: 0.55rem;
+    color: var(--muted);
+  }
+
+  .screen-card .card-price {
+    font-weight: 700;
+    font-size: 0.7rem;
+    color: var(--orange);
+    margin-top: 0.2rem;
+  }
+
+  /* Floating badges around phone */
+  .float-badge {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: white;
+    padding: 0.6rem 1rem;
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--dark);
+    z-index: 4;
+    white-space: nowrap;
+  }
+
+  .float-badge .badge-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .float-badge.calendar {
+    top: 25%;
+    left: -30px;
+    animation: floatBadge 4s ease-in-out infinite;
+  }
+
+  .float-badge.calendar .badge-icon {
+    background: rgba(255, 93, 2, 0.1);
+  }
+
+  .float-badge.courses {
+    top: 35%;
+    right: -40px;
+    animation: floatBadge 4s ease-in-out infinite 1s;
+  }
+
+  .float-badge.courses .badge-icon {
+    background: rgba(255, 93, 2, 0.1);
+  }
+
+  .float-badge.downloads {
+    bottom: 25%;
+    left: -20px;
+    animation: floatBadge 4s ease-in-out infinite 2s;
+  }
+
+  .float-badge.downloads .badge-icon {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  @keyframes floatBadge {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .scroll-hint {
+    display: none;
+  }
+
+  .btn-primary {
+    background: var(--orange);
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+  }
+
+  .btn-primary:hover::after { transform: translateX(100%); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255, 93, 2, 0.35); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--walnut);
+    border: 2px solid var(--light-tan);
+    padding: 0.95rem 2rem;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-ghost:hover { border-color: var(--walnut); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SCROLL INDICATOR ─── */
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.2s;
+  }
+
+  .scroll-hint .arrow {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--muted), transparent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  /* ─── STORY SECTIONS ─── */
+  .story-section {
+    padding: 6rem 2rem;
+    position: relative;
+  }
+
+  .story-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* ─── PROBLEM OPENER ─── */
+  .problem-opener {
+    background: var(--dark);
+    color: white;
+    text-align: center;
+    padding: 8rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .problem-opener::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      
+      none;
+    pointer-events: none;
+  }
+
+  .problem-opener .story-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 2rem;
+    font-weight: 600;
+  }
+
+  .problem-opener h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    line-height: 1.15;
+    max-width: 700px;
+    margin: 0 auto 1.5rem;
+    color: white;
+  }
+
+  .problem-opener h2 em {
+    color: var(--orange);
+    font-style: italic;
+  }
+
+  .problem-opener p {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.6);
+    max-width: 550px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .problem-opener h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    line-height: 1.3;
+    max-width: 650px;
+    margin: 0 auto;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 400;
+  }
+
+  .problem-opener h3 em {
+    color: var(--orange);
+    font-style: italic;
+  }
+
+  /* ─── PAIN POINTS ─── */
+  .pain-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    padding: 6rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .pain-card.reversed { direction: rtl; }
+  .pain-card.reversed > * { direction: ltr; }
+
+  .pain-text .pain-number {
+    font-family: 'DM Serif Display', serif;
+    font-size: 4rem;
+    color: var(--light-tan);
+    line-height: 1;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+
+  .pain-label {
+    font-family: 'DM Serif Display', serif;
+    font-size: 4rem;
+    color: var(--light-tan);
+  }
+
+  .pain-text .pain-quote {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    font-style: italic;
+    color: var(--walnut);
+    line-height: 1.4;
+    margin-bottom: 1rem;
+    position: relative;
+    padding-left: 1.5rem;
+    border-left: 3px solid var(--orange);
+  }
+
+  .pain-text .pain-desc {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .pain-text .solution-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 93, 2, 0.08);
+    color: var(--orange);
+    padding: 0.6rem 1.2rem;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .pain-visual {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Visual mockups inside pain cards */
+  .mock-linkinbio {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 2rem;
+  }
+
+  .mock-linkinbio .mock-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #ddd;
+    margin: 0 auto 0.5rem;
+  }
+
+  .mock-linkinbio .mock-name {
+    text-align: center;
+    font-weight: 600;
+    color: #999;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .mock-linkinbio .mock-link {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #aaa;
+    background: white;
+  }
+
+  .mock-linkinbio.ugly .mock-link {
+    border-radius: 0;
+    border-color: #ccc;
+    background: #f5f5f5;
+  }
+
+  .mock-linkinbio.beautiful {
+    background: linear-gradient(135deg, var(--cream), white);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+    padding: 2.5rem 2rem;
+  }
+
+  .mock-linkinbio.beautiful .mock-avatar {
+    background: linear-gradient(135deg, var(--orange), var(--walnut));
+  }
+
+  .mock-linkinbio.beautiful .mock-name {
+    color: var(--walnut);
+    font-size: 1rem;
+  }
+
+  .mock-linkinbio.beautiful .mock-link {
+    border: none;
+    background: var(--walnut);
+    color: white;
+    border-radius: 12px;
+    font-weight: 500;
+    padding: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .mock-linkinbio.beautiful .mock-link:nth-child(odd) {
+    background: var(--orange);
+  }
+
+  /* ─── SIDE-BY-SIDE COMPARISON ─── */
+  .comparison-visual {
+    aspect-ratio: auto !important;
+    overflow: visible !important;
+    background: transparent !important;
+    padding: 1rem 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .compare-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    width: 100%;
+  }
+
+  .compare-side {
+    position: relative;
+    padding-top: 2rem;
+  }
+
+  .compare-label {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.8rem;
+    border-radius: 100px;
+    white-space: nowrap;
+    z-index: 5;
+  }
+
+  .compare-label-before {
+    background: #333;
+    color: white;
+  }
+
+  .compare-label-after {
+    background: var(--orange);
+    color: white;
+  }
+
+  .compare-arrow {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    margin-top: 2rem;
+    animation: arrowNudge 1.5s ease-in-out infinite;
+  }
+
+  @keyframes arrowNudge {
+    0%, 100% { transform: translateX(0) scale(1); }
+    40% { transform: translateX(8px) scale(1.15); }
+    60% { transform: translateX(8px) scale(1.15); }
+    80% { transform: translateX(-2px) scale(1); }
+  }
+
+  /* Phone frames for comparison */
+  .compare-phone {
+    width: 220px;
+    height: 460px;
+    background: #1a1a1a;
+    border-radius: 32px;
+    padding: 8px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+    position: relative;
+  }
+
+  .compare-phone .cp-notch {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 20px;
+    background: #1a1a1a;
+    border-radius: 0 0 14px 14px;
+    z-index: 3;
+  }
+
+  .compare-phone .cp-screen {
+    width: 100%;
+    height: 100%;
+    border-radius: 26px;
+    overflow: hidden;
+    background: white;
+  }
+
+  /* ─── LINKTREE INSIDE PHONE ─── */
+  .lt-screen {
+    background: #f5f5f5;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .lt-screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    border-radius: 26px;
+  }
+
+  .lt-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #E8A0C0, #A0C8E8);
+    margin-bottom: 0.35rem;
+    border: 2px solid #E8A0C0;
+  }
+
+  .lt-name {
+    font-weight: 700;
+    font-size: 0.7rem;
+    color: #1a1a1a;
+    margin-bottom: 0.7rem;
+  }
+
+  .lt-link {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 10px;
+    padding: 0.45rem 0.55rem;
+    margin-bottom: 0.3rem;
+    border: 1px solid #e8e8e8;
+    gap: 0.5rem;
+  }
+
+  .lt-thumb {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  .lt-link span {
+    font-size: 0.58rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    flex: 1;
+    text-align: center;
+  }
+
+  .lt-dots {
+    color: #ccc;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+  }
+
+  .lt-footer {
+    margin-top: auto;
+    padding: 0.4rem 0.8rem;
+    border-radius: 100px;
+    border: 1px solid #ddd;
+    font-size: 0.5rem;
+    color: #888;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+  }
+
+  /* ─── LOOPLINQ INSIDE PHONE ─── */
+  .lq-screen {
+    background: white;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .lq-cover {
+    width: 100%;
+    height: 80px;
+    background: linear-gradient(135deg, #D4A0D0, #8BC49A);
+    flex-shrink: 0;
+  }
+
+  .lq-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #E8A0C0, #8BC49A);
+    border: 2px solid white;
+    margin-top: -20px;
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+  }
+
+  .lq-name {
+    font-weight: 700;
+    font-size: 0.7rem;
+    color: #1a1a1a;
+    margin-top: 0.2rem;
+  }
+
+  .lq-bio {
+    font-size: 0.5rem;
+    color: #888;
+  }
+
+  .lq-location {
+    font-size: 0.45rem;
+    color: #aaa;
+    margin-bottom: 0.3rem;
+  }
+
+  .lq-socials {
+    display: flex;
+    gap: 0.3rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .lq-social {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.4rem;
+    font-weight: 700;
+    color: #555;
+  }
+
+  .lq-body {
+    width: 100%;
+    padding: 0 0.7rem 0.7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .lq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem;
+    width: 100%;
+  }
+
+  .lq-card {
+    background: #f8f8f8;
+    border-radius: 10px;
+    padding: 0.45rem;
+    border: 1px solid #eee;
+  }
+
+  .lq-card-img {
+    width: 100%;
+    height: 40px;
+    border-radius: 6px;
+    margin-bottom: 0.2rem;
+  }
+
+  .lq-card-domain {
+    font-size: 0.4rem;
+    color: #aaa;
+  }
+
+  .lq-card-title {
+    font-weight: 700;
+    font-size: 0.5rem;
+    color: #1a1a1a;
+    line-height: 1.3;
+  }
+
+  .lq-card-desc {
+    font-size: 0.42rem;
+    color: #888;
+    line-height: 1.3;
+  }
+
+  .lq-feature-card {
+    display: flex;
+    gap: 0.45rem;
+    background: #f8f8f8;
+    border-radius: 10px;
+    padding: 0.45rem;
+    width: 100%;
+    border: 1px solid #eee;
+  }
+
+  .lq-fc-img {
+    width: 55px;
+    height: 48px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  .lq-fc-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .lq-yt-card {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: #FDE8E8;
+    border-radius: 10px;
+    padding: 0.45rem 0.6rem;
+    width: 100%;
+  }
+
+  .lq-yt-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #FF0000;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  /* VS divider */
+  .vs-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    background: var(--orange);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.8rem;
+    box-shadow: 0 4px 20px rgba(255, 93, 2, 0.3);
+  }
+
+  .split-visual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .split-visual .side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .split-visual .side.boring {
+    background: #f0f0f0;
+  }
+
+  .split-visual .side.beautiful-side {
+    background: linear-gradient(135deg, var(--cream), white);
+  }
+
+  /* Dashboard mock */
+  .mock-dashboard {
+    width: 90%;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+  }
+
+  .mock-dashboard .dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .mock-dashboard .dash-title {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--walnut);
+  }
+
+  .mock-dashboard .dash-badge {
+    font-size: 0.7rem;
+    background: rgba(255, 93, 2, 0.1);
+    color: var(--orange);
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+    font-weight: 600;
+  }
+
+  .mock-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 80px;
+    margin-bottom: 1rem;
+  }
+
+  .mock-chart .bar {
+    flex: 1;
+    border-radius: 4px 4px 0 0;
+    transition: height 0.5s ease;
+  }
+
+  .mock-chart .bar:nth-child(1) { height: 30%; background: var(--light-tan); }
+  .mock-chart .bar:nth-child(2) { height: 45%; background: var(--light-tan); }
+  .mock-chart .bar:nth-child(3) { height: 35%; background: var(--light-tan); }
+  .mock-chart .bar:nth-child(4) { height: 55%; background: var(--orange); opacity: 0.6; }
+  .mock-chart .bar:nth-child(5) { height: 70%; background: var(--orange); opacity: 0.7; }
+  .mock-chart .bar:nth-child(6) { height: 60%; background: var(--orange); opacity: 0.8; }
+  .mock-chart .bar:nth-child(7) { height: 85%; background: var(--orange); }
+  .mock-chart .bar:nth-child(8) { height: 95%; background: var(--orange); }
+
+  .mock-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .mock-metric {
+    text-align: center;
+    padding: 0.5rem;
+    background: var(--cream);
+    border-radius: 8px;
+  }
+
+  .mock-metric .val {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--walnut);
+  }
+
+  .mock-metric .label {
+    font-size: 0.65rem;
+    color: var(--muted);
+    margin-top: 0.15rem;
+  }
+
+  /* Tools mock */
+  .mock-tools-stack {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .tool-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    padding: 0.8rem 1.2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  }
+
+  .tool-row .tool-name {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--dark);
+  }
+
+  .tool-row .tool-price {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: line-through;
+  }
+
+  .tools-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.2rem;
+    background: var(--walnut);
+    border-radius: 12px;
+    color: white;
+  }
+
+  .tools-total .total-label {
+    font-weight: 500;
+    font-size: 0.85rem;
+  }
+
+  .tools-total .total-old {
+    text-decoration: line-through;
+    opacity: 0.5;
+    font-size: 0.85rem;
+    margin-right: 0.5rem;
+  }
+
+  .tools-total .total-new {
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--orange);
+  }
+
+  /* ─── TRANSITION / STORY BEAT ─── */
+  .story-beat {
+    text-align: center;
+    padding: 3rem 2rem 2rem;
+    background: var(--dark);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .story-beat::before {
+    content: none;
+  }
+
+  .story-beat h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    color: white;
+    max-width: 600px;
+    margin: 0 auto 0.5rem;
+    line-height: 1.15;
+  }
+
+  .story-beat h2 em {
+    color: var(--orange);
+    font-style: italic;
+  }
+
+  .story-beat p {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    max-width: 550px;
+    margin: 0 auto 1.5rem;
+    line-height: 1.6;
+  }
+
+  .story-beat p em {
+    color: var(--orange);
+    font-style: italic;
+  }
+
+  /* Monitor frame */
+  .monitor-frame {
+    max-width: 620px;
+    margin: 0 auto;
+    position: relative;
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.4));
+  }
+
+  .monitor-bezel {
+    background: linear-gradient(180deg, #F0F0F0 0%, #EAEAEA 40%, #E0E0E0 100%);
+    border-radius: 12px 12px 0 0;
+    padding: 0;
+    position: relative;
+    border: 1px solid #D0D0D0;
+    border-bottom: none;
+  }
+
+  .monitor-bezel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.5), transparent);
+  }
+
+  .monitor-top-bar {
+    display: flex;
+    align-items: center;
+    padding: 7px 12px;
+    position: relative;
+  }
+
+  .monitor-dots {
+    display: flex;
+    gap: 5px;
+  }
+
+  .monitor-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .monitor-dots span:nth-child(1) {
+    background: #FF5F57;
+    box-shadow: inset 0 -1px 2px rgba(0,0,0,0.2);
+  }
+
+  .monitor-dots span:nth-child(2) {
+    background: #FEBC2E;
+    box-shadow: inset 0 -1px 2px rgba(0,0,0,0.2);
+  }
+
+  .monitor-dots span:nth-child(3) {
+    background: #28C840;
+    box-shadow: inset 0 -1px 2px rgba(0,0,0,0.2);
+  }
+
+  .monitor-url-bar {
+    flex: 1;
+    max-width: 400px;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 6px;
+    padding: 4px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .monitor-url-bar .lock-icon {
+    font-size: 0.5rem;
+    color: #aaa;
+  }
+
+  .monitor-url-bar .url-text {
+    font-size: 0.55rem;
+    color: #aaa;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .monitor-screen-wrap {
+    padding: 0 8px 8px;
+  }
+
+  .monitor-screen {
+    background: white;
+    border-radius: 2px;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    position: relative;
+  }
+
+  .monitor-chin {
+    height: 18px;
+    background: linear-gradient(180deg, #2a2a2a 0%, #333 100%);
+    border-radius: 0 0 16px 16px;
+    border: 1px solid #444;
+    border-top: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .monitor-chin-logo {
+    width: 20px;
+    height: 3px;
+    background: #555;
+    border-radius: 2px;
+  }
+
+  .monitor-stand {
+    width: 100px;
+    height: 40px;
+    background: linear-gradient(180deg, #E0E0E0 0%, #D5D5D5 100%);
+    margin: 0 auto;
+    clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
+    border-left: 1px solid #D0D0D0;
+    border-right: 1px solid #D0D0D0;
+  }
+
+  .monitor-base {
+    width: 220px;
+    height: 8px;
+    background: linear-gradient(180deg, #E0E0E0, #D5D5D5);
+    margin: 0 auto;
+    border-radius: 2px 2px 6px 6px;
+    border: 1px solid #D0D0D0;
+    position: relative;
+  }
+
+  .monitor-base::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 10%;
+    right: 10%;
+    height: 4px;
+    background: rgba(255, 93, 2, 0.1);
+    border-radius: 50%;
+    filter: blur(4px);
+  }
+
+  /* Display controls row */
+  .display-controls {
+    max-width: 620px;
+    margin: 0 auto 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .device-switcher {
+    display: flex;
+    gap: 0.2rem;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 0.15rem;
+  }
+
+  .device-btn {
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .device-btn.active {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+  }
+
+  /* Profile carousel nav */
+  .profile-carousel-nav {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .profile-dot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    cursor: pointer;
+    opacity: 0.4;
+    transition: all 0.3s ease;
+  }
+
+  .profile-dot.active {
+    opacity: 1;
+  }
+
+  .profile-dot:hover {
+    opacity: 0.8;
+  }
+
+  .profile-dot-avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+
+  .profile-dot.active .profile-dot-avatar {
+    border-color: var(--orange);
+  }
+
+  .profile-dot span {
+    font-size: 0.55rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  /* Profile slides */
+  .profile-slides {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .profile-slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: fadeSlide 0.4s ease;
+  }
+
+  .profile-slide.active {
+    display: block;
+  }
+
+  .profile-placeholder {
+    background: #f5f5f5;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .profile-placeholder.active {
+    display: flex;
+  }
+
+  .placeholder-content {
+    text-align: center;
+    color: #bbb;
+  }
+
+  .placeholder-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .placeholder-text {
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  /* Device views */
+  .device-view {
+    display: none;
+    animation: fadeSlide 0.4s ease;
+  }
+
+  .device-view.active {
+    display: block;
+  }
+
+  /* Mobile phone frame for story section */
+  .mobile-phone-frame {
+    width: 280px;
+    height: 520px;
+    background: var(--light-tan);
+    border-radius: 28px;
+    padding: 5px;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .mp-notch {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 20px;
+    background: var(--light-tan);
+    border-radius: 0 0 14px 14px;
+    z-index: 3;
+  }
+
+  .mp-screen {
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    background: white;
+    position: relative;
+  }
+
+  /* Web mockup inside monitor */
+  .web-mockup {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    height: 100%;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .wm-sidebar {
+    background: #fafafa;
+    padding: 1rem 0.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 1px solid #eee;
+  }
+
+  .wm-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #E8A0C0, #A0C8E8);
+    margin-bottom: 0.4rem;
+  }
+
+  .wm-name {
+    font-weight: 700;
+    font-size: 0.65rem;
+    color: #1a1a1a;
+    margin-bottom: 0.1rem;
+  }
+
+  .wm-bio {
+    font-size: 0.45rem;
+    color: #888;
+    margin-bottom: 0.05rem;
+  }
+
+  .wm-location {
+    font-size: 0.4rem;
+    color: #aaa;
+    margin-bottom: 0.4rem;
+  }
+
+  .wm-socials {
+    display: flex;
+    gap: 0.35rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .wm-socials span {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.4rem;
+    color: #555;
+  }
+
+  .wm-content {
+    padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow: hidden;
+  }
+
+  .wm-top-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .wm-card {
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 0.5rem;
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .wm-card-img {
+    width: 60px;
+    height: 50px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  .wm-card-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .wm-card-domain {
+    font-size: 0.35rem;
+    color: #aaa;
+  }
+
+  .wm-card-title {
+    font-size: 0.45rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.3;
+  }
+
+  .wm-card-desc {
+    font-size: 0.35rem;
+    color: #888;
+    line-height: 1.3;
+  }
+
+  .wm-feature-card {
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .wm-feature-img {
+    width: 120px;
+    height: 70px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  .wm-feature-text {
+    flex: 1;
+  }
+
+  .wm-bottom-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .wm-social-card {
+    border-radius: 8px;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 55px;
+  }
+
+  .wm-social-card .wm-sc-icon {
+    font-size: 0.7rem;
+  }
+
+  .wm-social-card .wm-sc-name {
+    font-size: 0.45rem;
+    font-weight: 700;
+  }
+
+  .wm-social-card .wm-sc-handle {
+    font-size: 0.35rem;
+    opacity: 0.7;
+  }
+
+  /* ─── PRICING SIMPLE ─── */
+  .pricing-simple {
+    text-align: center;
+    padding: 6rem 2rem;
+    background: var(--warm-white);
+  }
+
+  .pricing-simple h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--walnut);
+    margin-bottom: 0.5rem;
+  }
+
+  .pricing-simple .pricing-sub {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .price-card {
+    max-width: 440px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .price-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, var(--orange), var(--walnut));
+  }
+
+  .price-amount {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .price-amount .dollar {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--walnut);
+  }
+
+  .price-amount .number {
+    font-family: 'DM Serif Display', serif;
+    font-size: 4rem;
+    color: var(--walnut);
+    line-height: 1;
+  }
+
+  .price-amount .period {
+    font-size: 1rem;
+    color: var(--muted);
+  }
+
+  .price-tagline {
+    color: var(--orange);
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+
+  .price-tagline em {
+    font-style: italic;
+    text-decoration: underline;
+    text-decoration-color: var(--orange);
+    text-underline-offset: 3px;
+  }
+
+  .price-annual-note {
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 0.3rem;
+    min-height: 1.2em;
+  }
+
+  /* Pricing toggle */
+  .pricing-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .toggle-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .toggle-label.active {
+    color: var(--walnut);
+    font-weight: 700;
+  }
+
+  .toggle-save {
+    font-size: 0.65rem;
+    background: rgba(255, 93, 2, 0.1);
+    color: var(--orange);
+    padding: 0.15rem 0.5rem;
+    border-radius: 100px;
+    font-weight: 700;
+    margin-left: 0.25rem;
+  }
+
+  .toggle-switch {
+    width: 44px;
+    height: 24px;
+    background: #ddd;
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.3s ease;
+  }
+
+  .toggle-switch.annual {
+    background: var(--orange);
+  }
+
+  .toggle-knob {
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  }
+
+  .toggle-switch.annual .toggle-knob {
+    transform: translateX(20px);
+  }
+
+  .price-features {
+    text-align: left;
+    list-style: none;
+    margin-bottom: 2rem;
+  }
+
+  .price-features li {
+    padding: 0.6rem 0;
+    font-size: 0.95rem;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid var(--light-tan);
+  }
+
+  .price-features li:last-child { border-bottom: none; }
+
+  .price-features li::before {
+    content: '✓';
+    color: var(--orange);
+    font-weight: 800;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .price-card .btn-primary {
+    width: 100%;
+    padding: 1.1rem;
+    font-size: 1.05rem;
+  }
+
+  /* ─── TRANSFORMATION ─── */
+  .transformation {
+    padding: 8rem 2rem;
+    text-align: center;
+    background: var(--dark);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .transformation::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      
+      none;
+    pointer-events: none;
+  }
+
+  .transformation .story-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 2rem;
+    font-weight: 600;
+  }
+
+  .transformation h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    max-width: 650px;
+    margin: 0 auto 1.5rem;
+    line-height: 1.15;
+  }
+
+  .transformation h2 em {
+    color: var(--orange);
+    font-style: italic;
+  }
+
+  .transformation-story {
+    max-width: 580px;
+    margin: 0 auto 3rem;
+  }
+
+  .transformation-story p {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .transformation-story p em {
+    color: var(--orange);
+    font-style: italic;
+  }
+
+  .stat-row {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-item .stat-val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    color: var(--orange);
+  }
+
+  .stat-item .stat-label {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    margin-top: 0.25rem;
+  }
+
+  /* ─── FUNNEL GRAPHIC ─── */
+  .funnel-graphic {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .funnel-arrow {
+    opacity: 0.8;
+  }
+
+  .funnel-label {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.02em;
+  }
+
+  .funnel-steps {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .funnel-step {
+    text-align: center;
+    max-width: 140px;
+  }
+
+  .funnel-step-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: rgba(255, 93, 2, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin: 0 auto 0.5rem;
+  }
+
+  .funnel-step-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+  }
+
+  .funnel-step-desc {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.45);
+    line-height: 1.4;
+  }
+
+  /* ─── FINAL CTA ─── */
+  .final-cta {
+    text-align: center;
+    padding: 8rem 2rem;
+    background: var(--cream);
+    position: relative;
+  }
+
+  .final-cta h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    color: var(--walnut);
+    max-width: 600px;
+    margin: 0 auto 1rem;
+    line-height: 1.15;
+  }
+
+  .final-cta h2 em {
+    color: var(--orange);
+    font-style: italic;
+  }
+
+  .final-cta p {
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 450px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+  }
+
+  .claim-input-group {
+    display: flex;
+    max-width: 440px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 100px;
+    padding: 0.35rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  .claim-input-group input {
+    flex: 1;
+    border: none;
+    padding: 0.9rem 1.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    background: transparent;
+    outline: none;
+    color: var(--dark);
+  }
+
+  .claim-input-group input::placeholder {
+    color: var(--muted);
+  }
+
+  .claim-input-group .btn-primary {
+    padding: 0.9rem 2rem;
+    flex-shrink: 0;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--dark);
+    color: rgba(255,255,255,0.4);
+    font-size: 0.85rem;
+  }
+
+  footer .logo {
+    color: white;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .hero {
+      grid-template-columns: 1fr;
+      padding: 7rem 1.5rem 0;
+      min-height: auto;
+    }
+
+    .hero-content {
+      padding-right: 0;
+      text-align: center;
+    }
+
+    .hero-phone {
+      height: 400px;
+      justify-content: center;
+    }
+
+    .phone-frame {
+      width: 220px;
+      height: 450px;
+      border-radius: 32px;
+      padding: 8px;
+      transform: none;
+      margin-bottom: -30px;
+    }
+
+    .phone-notch {
+      width: 90px;
+      height: 22px;
+      top: 8px;
+    }
+
+    .phone-screen {
+      border-radius: 26px;
+    }
+
+    .screen-content {
+      padding: 2.5rem 0.8rem 0.8rem;
+    }
+
+    .screen-header-img { height: 120px; }
+
+    .float-badge { display: none; }
+
+    .pain-card {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 4rem 1.5rem;
+    }
+
+    .pain-card.reversed { direction: ltr; }
+
+    .pain-visual { aspect-ratio: 3/2; }
+
+    .hero { padding: 7rem 1.5rem 4rem; }
+
+    .hero-cta-group {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .hero-cta-group .btn-primary,
+    .hero-cta-group .btn-ghost {
+      width: 100%;
+      text-align: center;
+    }
+
+    .stat-row { gap: 2rem; }
+
+    .claim-input-group {
+      flex-direction: column;
+      border-radius: 20px;
+      padding: 0.5rem;
+    }
+
+    .claim-input-group .btn-primary {
+      width: 100%;
+      border-radius: 16px;
+    }
+
+    nav { padding: 0.8rem 1.2rem; }
+    .nav-links { display: none; }
+    .logo { font-size: 1.2rem; }
+  }
+
+  /* ─── TOOLS COMPARISON CARD ─── */
+  .tools-comparison-card {
+    background: transparent !important;
+    aspect-ratio: auto !important;
+    overflow: visible !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem !important;
+  }
+
+  .tc-inner {
+    width: 100%;
+    max-width: 380px;
+    background: linear-gradient(to bottom, #ffffff 0%, #ffffff 60%, #FFF0E6 80%, #FF8A40 95%, #FF5D02 100%);
+    border-radius: 20px;
+    padding: 1.5rem 1.5rem 2rem;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tc-header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 0.5rem;
+  }
+
+  .tc-label {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .tc-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid #f3f0ed;
+  }
+
+  .tc-row:last-of-type {
+    border-bottom: none;
+  }
+
+  .tc-tool {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .tc-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: var(--light-tan);
+    flex-shrink: 0;
+  }
+
+  .tc-name {
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: var(--dark);
+    line-height: 1.2;
+  }
+
+  .tc-replaces {
+    display: flex;
+    gap: 4px;
+    margin-top: 3px;
+  }
+
+  .tc-blur {
+    display: inline-block;
+    width: 40px;
+    height: 8px;
+    border-radius: 4px;
+    background: #e8e4e0;
+  }
+
+  .tc-blur.short {
+    width: 24px;
+  }
+
+  .tc-cost {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--orange);
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  .tc-cost.bold {
+    color: var(--dark);
+    font-weight: 800;
+  }
+
+  .tc-footer {
+    margin-top: 1rem;
+    background: var(--walnut);
+    border-radius: 12px;
+    padding: 0.9rem 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .tc-footer-label {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+  }
+
+  .tc-footer-prices {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .tc-old-price {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.45);
+    text-decoration: line-through;
+  }
+
+  .tc-new-price {
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--orange);
+  }
+
+  /* ─── CAROUSEL ─── */
+  .carousel-visual {
+    aspect-ratio: auto !important;
+    overflow: visible !important;
+    background: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .carousel-wrapper {
+    width: 100%;
+  }
+
+  .carousel-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+  }
+
+  .carousel-tab {
+    padding: 0.45rem 1.2rem;
+    border-radius: 100px;
+    border: 1px solid #ddd;
+    background: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .carousel-tab.active {
+    background: var(--walnut);
+    color: white;
+    border-color: var(--walnut);
+  }
+
+  .carousel-track {
+    position: relative;
+    width: 100%;
+    min-height: 380px;
+  }
+
+  .carousel-slide {
+    display: none;
+    width: 100%;
+    animation: fadeSlide 0.4s ease;
+  }
+
+  .carousel-slide.active {
+    display: block;
+  }
+
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 0.8rem;
+  }
+
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ddd;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .carousel-dot.active {
+    background: var(--orange);
+    width: 20px;
+    border-radius: 4px;
+  }
+
+  /* ─── MEDIA KIT CARD ─── */
+  .mk-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.2rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    border: 1px solid #eee;
+  }
+
+  .mk-header {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 1rem;
+  }
+
+  .mk-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .mk-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mk-info { flex: 1; }
+
+  .mk-name {
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: #1a1a1a;
+  }
+
+  .mk-handle {
+    font-size: 0.55rem;
+    color: #888;
+  }
+
+  .mk-contact {
+    padding: 0.35rem 0.8rem;
+    background: #6C63FF;
+    color: white;
+    border-radius: 8px;
+    font-size: 0.6rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .mk-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    background: #f8f8f8;
+    border-radius: 12px;
+    padding: 0.7rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .mk-stat {
+    text-align: center;
+  }
+
+  .mk-stat-icon {
+    font-size: 0.65rem;
+    margin-bottom: 0.1rem;
+  }
+
+  .mk-stat-val {
+    font-weight: 800;
+    font-size: 0.75rem;
+    color: #1a1a1a;
+  }
+
+  .mk-stat-label {
+    font-size: 0.45rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .mk-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .mk-section-title {
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .mk-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.35rem;
+    font-size: 0.55rem;
+    color: #555;
+  }
+
+  .mk-bar-row span:first-child {
+    width: 45px;
+    font-weight: 500;
+  }
+
+  .mk-bar-row span:last-child {
+    width: 25px;
+    text-align: right;
+    font-weight: 600;
+  }
+
+  .mk-bar {
+    flex: 1;
+    height: 6px;
+    background: #eee;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .mk-bar-fill {
+    height: 100%;
+    background: #6C63FF;
+    border-radius: 3px;
+  }
+
+  .mk-partner-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem;
+  }
+
+  .mk-partner {
+    height: 28px;
+    border-radius: 6px;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.4rem;
+  }
+
+  .mk-partner img {
+    max-height: 16px;
+    max-width: 100%;
+    object-fit: contain;
+  }
+
+  .mk-partner span {
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #333;
+  }
+
+  /* ─── ANALYTICS CARD ─── */
+  .an-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    border: 1px solid #eee;
+  }
+
+  .an-nav {
+    display: flex;
+    gap: 1rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .an-nav-item {
+    font-size: 0.6rem;
+    font-weight: 500;
+    color: #aaa;
+    cursor: pointer;
+    padding-bottom: 0.3rem;
+  }
+
+  .an-nav-item.active {
+    color: #1a1a1a;
+    font-weight: 700;
+    border-bottom: 2px solid #1a1a1a;
+  }
+
+  .an-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.6rem;
+  }
+
+  .an-title {
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: #1a1a1a;
+  }
+
+  .an-period {
+    font-size: 0.55rem;
+    color: #888;
+    border: 1px solid #ddd;
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+  }
+
+  .an-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.4rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .an-metric {
+    background: #f8f8f8;
+    border-radius: 10px;
+    padding: 0.5rem;
+  }
+
+  .an-metric-label {
+    font-size: 0.45rem;
+    color: #888;
+    margin-bottom: 0.15rem;
+  }
+
+  .an-up { color: #22C55E; }
+  .an-down { color: #EF4444; }
+
+  .an-metric-val {
+    font-weight: 800;
+    font-size: 0.85rem;
+    color: #1a1a1a;
+  }
+
+  .an-chart-label {
+    font-size: 0.55rem;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 0.4rem;
+  }
+
+  .an-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.35rem;
+    height: 80px;
+    margin-bottom: 0.7rem;
+    padding-bottom: 1rem;
+    position: relative;
+  }
+
+  .an-chart-group {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 100%;
+    position: relative;
+  }
+
+  .an-chart-group span {
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.4rem;
+    color: #aaa;
+  }
+
+  .an-bar {
+    flex: 1;
+    border-radius: 2px 2px 0 0;
+    min-width: 8px;
+  }
+
+  .an-top-content {
+    border-top: 1px solid #eee;
+    padding-top: 0.6rem;
+  }
+
+  .an-tc-title {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+  }
+
+  .an-tc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+  }
+
+  .an-tc-item {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .an-tc-thumb {
+    width: 100%;
+    height: 45px;
+    border-radius: 8px;
+    margin-bottom: 0.2rem;
+  }
+
+  .an-tc-meta {
+    font-size: 0.4rem;
+    color: #888;
+    margin-bottom: 0.1rem;
+  }
+
+  .an-tc-name {
+    font-size: 0.5rem;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  /* ─── STOREFRONT MOCK ─── */
+  .mock-storefront {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .storefront-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: white;
+    padding: 1rem 1.2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+  }
+
+  .storefront-item:hover { transform: translateY(-2px); }
+
+  .storefront-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .storefront-icon.coaching { background: rgba(255, 93, 2, 0.1); }
+  .storefront-icon.course { background: rgba(0, 0, 0, 0.05); }
+  .storefront-icon.digital { background: rgba(255, 93, 2, 0.08); }
+
+  .storefront-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .storefront-info .sf-name {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--dark);
+  }
+
+  .storefront-info .sf-detail {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 0.1rem;
+  }
+
+  .storefront-price {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--orange);
+    flex-shrink: 0;
+  }
+
+  .storefront-total {
+    text-align: center;
+    padding: 0.8rem;
+    background: linear-gradient(135deg, var(--orange), var(--walnut));
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  /* ─── DIVIDER ─── */
+  .section-divider {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .section-divider .line {
+    width: 60px;
+    height: 2px;
+    background: var(--orange);
+    opacity: 0.3;
+  }
+</style>
 </head>
 <body>
-    <h1>Podcast Imported </h1>
-    <ul>
-        <li><a href="NapierChangingGlobal.html" target="_blank">Napier and the Changing World Order 2024</a></li>
-        <li><a href="KissofDeathHayes.html" target="_blank">Kiss of Death Arthur Hayes - ChatGPT Summary - March 2025</a></li>
-        <li><a href="NapierHiddenForces2024" target="_blank"> Napier Hidden Forces - New Internattional Monetary Theory </a></li>
-        <li><a href="NapierAgeofDebtApril2024.html" target="_blank"> Napier Age of Debt 2024 Jack Farley - China </a></li>
-        <li><a href="TakeshiFujimakiJGBCrises.html" target="_blank"> Takeshi Fujimaki Interview - Japan Crises </a></li>
-        <li><a href="DataAvail.html" target="_blank"> Data Availibty </a></li>
-        <li><a href="FullNodeData.html" target="_blank"> Why Full Nodes Cannot Prove Missing Data </a></li>
-        <li><a href="CrvWars.html" target="_blank"> Crv Wars </a></li>
-        <li><a href="RollupTXN.html" target="_blank"> TXN LifeCycle on Roll-Up </a></li>
-        <li><a href="AggTheory.html" target="_blank"> AggTheory </a></li>
-                <li><a href="OlpDebate.html" target="_blank"> OLP Debate  </a></li>
-          <li><a href="shredmaxxing_academy.html" target="_blank"> shredmaxxing_academy.html  </a></li>
 
+<!-- SCROLL PROGRESS BAR -->
+<div class="scroll-progress" id="scrollProgress"></div>
 
-
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="logo">loop<span>linq</span></div>
+  <div class="nav-right">
+    <button class="nav-cta">Claim Link</button>
+    <ul class="nav-links">
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">FAQs</a></li>
+      <li><a href="#">Stories</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#features">Features</a></li>
     </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Turn Your Link in Bio into <em>Income</em></h1>
+    <p class="hero-sub">The all-in-one creator platform that replaces your scattered tools, showcases your brand, and actually helps you get paid.</p>
+    <div class="hero-cta-group">
+      <button class="btn-primary">Claim Your Link</button>
+      <button class="btn-ghost">See How It Works</button>
+    </div>
+  </div>
+  <div class="hero-phone">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="screen-content">
+          <div class="screen-header-img"><img src="images/img_1.jpg" alt="Creator"></div>
+          <div class="screen-avatar"></div>
+          <div class="screen-name">TheGlobalTemi</div>
+          <div class="screen-handle">Creator & Entrepreneur</div>
+          <div class="screen-socials">
+            <div class="social-dot"></div>
+            <div class="social-dot"></div>
+            <div class="social-dot"></div>
+            <div class="social-dot"></div>
+            <div class="social-dot"></div>
+          </div>
+          <div class="screen-btn-contact">Contact Me</div>
+          <div class="screen-card">
+            <div class="card-title">30 Minutes Meeting</div>
+            <div class="card-meta">📍 30 min · Google Meet</div>
+            <div class="card-price">$50</div>
+          </div>
+          <div class="screen-card">
+            <div class="card-title">Content Creation Course</div>
+            <div class="card-meta">The Launchpad Sprint · 12 lessons</div>
+            <div class="card-price">$97</div>
+          </div>
+          <div class="screen-card">
+            <div class="card-title">Digital Download</div>
+            <div class="card-meta">If You Are In Your 20s · Ebook PDF</div>
+            <div class="card-price">$10</div>
+          </div>
+        </div>
+      </div>
+      <!-- Floating badges -->
+      <div class="float-badge calendar">
+        <div class="badge-icon">📅</div>
+        Calendar
+      </div>
+      <div class="float-badge courses">
+        <div class="badge-icon">🎓</div>
+        Courses
+      </div>
+      <div class="float-badge downloads">
+        <div class="badge-icon">📦</div>
+        Downloads
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM OPENER — the emotional hook -->
+<section class="problem-opener">
+  <div class="story-label">Sound familiar?</div>
+  <h2>You're creating every day.<br>But your <em>income</em> doesn't reflect it.</h2>
+  <h2>You post, you engage, you grind. But you're still not keeping up.<br><br>That's because you're struggling with <em>4 major problems.</em></h2>
+</section>
+
+<!-- PAIN 4: Paying for Too Many Tools -->
+<section class="pain-card reveal">
+  <div class="pain-text">
+    <div class="pain-number"><span class="pain-label">Problem</span>01</div>
+    <div class="pain-quote">"I'm bleeding $100+/month on tools that don't talk to each other."</div>
+    <p class="pain-desc">Link-in-bio here, scheduling tool there, payment processor somewhere else, a separate media kit builder, email marketing on another tab. You're paying for six platforms when you need one. LoopLinq consolidates everything a creator needs into a single, beautiful dashboard.</p>
+    <div class="solution-tag">→ Everything you need. $14/mo. That's it.</div>
+  </div>
+  <div class="pain-visual tools-comparison-card">
+    <div class="tc-inner">
+      <div class="tc-header">
+        <span class="tc-label">Tools</span>
+        <span class="tc-label">Your monthly bill</span>
+      </div>
+      <div class="tc-row">
+        <div class="tc-tool">
+          <div class="tc-icon"></div>
+          <div>
+            <div class="tc-name">Link-in-bio</div>
+            <div class="tc-replaces"><span class="tc-blur"></span><span class="tc-blur short"></span></div>
+          </div>
+        </div>
+        <div class="tc-cost">~$25/mo</div>
+      </div>
+      <div class="tc-row">
+        <div class="tc-tool">
+          <div class="tc-icon"></div>
+          <div>
+            <div class="tc-name">Digital Products</div>
+            <div class="tc-replaces"><span class="tc-blur"></span><span class="tc-blur short"></span><span class="tc-blur"></span></div>
+          </div>
+        </div>
+        <div class="tc-cost">~$30/mo</div>
+      </div>
+      <div class="tc-row">
+        <div class="tc-tool">
+          <div class="tc-icon"></div>
+          <div>
+            <div class="tc-name">Payment Processing</div>
+            <div class="tc-replaces"><span class="tc-blur"></span><span class="tc-blur short"></span></div>
+          </div>
+        </div>
+        <div class="tc-cost">~2.9% fees</div>
+      </div>
+      <div class="tc-row">
+        <div class="tc-tool">
+          <div class="tc-icon"></div>
+          <div>
+            <div class="tc-name">Media Kit</div>
+            <div class="tc-replaces"><span class="tc-blur short"></span><span class="tc-blur"></span></div>
+          </div>
+        </div>
+        <div class="tc-cost bold">Hours of work</div>
+      </div>
+      <div class="tc-row">
+        <div class="tc-tool">
+          <div class="tc-icon"></div>
+          <div>
+            <div class="tc-name">Analytics</div>
+            <div class="tc-replaces"><span class="tc-blur"></span><span class="tc-blur short"></span></div>
+          </div>
+        </div>
+        <div class="tc-cost">~$15/mo</div>
+      </div>
+      <div class="tc-row">
+        <div class="tc-tool">
+          <div class="tc-icon"></div>
+          <div>
+            <div class="tc-name">Investment Platform</div>
+            <div class="tc-replaces"><span class="tc-blur short"></span><span class="tc-blur"></span></div>
+          </div>
+        </div>
+        <div class="tc-cost">~0.5% yield</div>
+      </div>
+      <div class="tc-footer">
+        <span class="tc-footer-label">LoopLinq replaces all of it</span>
+        <div class="tc-footer-prices">
+          <span class="tc-old-price">$70+</span>
+          <span class="tc-new-price">$14/mo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="section-divider"><div class="line"></div></div>
+
+<!-- PAIN 3: Missing Monetization -->
+<section class="pain-card reversed reveal">
+  <div class="pain-text">
+    <div class="pain-number"><span class="pain-label">Problem</span>02</div>
+    <div class="pain-quote">"Other creators are making bank from coaching, courses, and downloads — and I didn't even know it was that easy."</div>
+    <p class="pain-desc">You see creators half your size pulling in real revenue and wonder what you're missing. The answer: they turned their knowledge into products. Coaching calls, mini-courses, templates, presets, guides — all sold directly from their page. LoopLinq gives you a built-in storefront with one-tap checkout, a booking calendar for paid calls, and course hosting — so you can start monetizing what you already know, today.</p>
+    <div class="solution-tag">→ Sell courses, coaching calls &amp; digital products from your page</div>
+  </div>
+  <div class="pain-visual">
+    <div class="mock-storefront">
+      <div class="storefront-item">
+        <div class="storefront-icon coaching">📞</div>
+        <div class="storefront-info">
+          <div class="sf-name">1:1 Coaching Call</div>
+          <div class="sf-detail">30 min · Calendar booking</div>
+        </div>
+        <div class="storefront-price">$150</div>
+      </div>
+      <div class="storefront-item">
+        <div class="storefront-icon course">🎓</div>
+        <div class="storefront-info">
+          <div class="sf-name">Creator Growth Course</div>
+          <div class="sf-detail">12 lessons · Self-paced</div>
+        </div>
+        <div class="storefront-price">$97</div>
+      </div>
+      <div class="storefront-item">
+        <div class="storefront-icon digital">📦</div>
+        <div class="storefront-info">
+          <div class="sf-name">Lightroom Preset Pack</div>
+          <div class="sf-detail">Instant download · 24 presets</div>
+        </div>
+        <div class="storefront-price">$29</div>
+      </div>
+      <div class="storefront-total">One-tap checkout · Built into your page · No extra tools</div>
+    </div>
+  </div>
+</section>
+
+
+
+<div class="section-divider"><div class="line"></div></div>
+
+<!-- PAIN 1: Ugly Link-in-Bio -->
+<section class="pain-card reveal">
+  <div class="pain-text">
+    <div class="pain-number"><span class="pain-label">Problem</span>03</div>
+    <div class="pain-quote">"My link in bio looks like a parking lot for URLs."</div>
+    <p class="pain-desc">Generic templates. Tiny fonts. Zero personality. Your audience lands on your page and feels nothing. In the creator economy, appearance isn't vanity — it's currency. A beautiful, on-brand page keeps people scrolling, clicking, and buying.</p>
+    <div class="solution-tag">→ A link-in-bio that actually looks like you</div>
+  </div>
+  <div class="pain-visual comparison-visual">
+    <div class="compare-container">
+      <!-- Linktree phone -->
+      <div class="compare-side">
+        <div class="compare-label compare-label-before">Linktree</div>
+        <div class="compare-phone">
+          <div class="cp-notch"></div>
+          <div class="cp-screen">
+            <img src="images/img_2.png" alt="Helenemoo Linktree" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;">
+          </div>
+        </div>
+      </div>
+      <!-- Arrow -->
+      <div class="compare-arrow">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <!-- LoopLinq phone -->
+      <div class="compare-side">
+        <div class="compare-label compare-label-after">LoopLinq</div>
+        <div class="compare-phone">
+          <div class="cp-notch"></div>
+          <div class="cp-screen">
+            <img src="images/img_3.png" alt="Helen M - LoopLinq" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<div class="section-divider"><div class="line"></div></div>
+
+<!-- PAIN 2: Don't Know What's Working -->
+<section class="pain-card reversed reveal">
+  <div class="pain-text">
+    <div class="pain-number"><span class="pain-label">Problem</span>04</div>
+    <div class="pain-quote">"I don't know what's working — or what I'm worth."</div>
+    <p class="pain-desc">You're posting into the void without real data. Which content actually drives clicks? What should your rate card say when a brand DMs you? Without analytics you're guessing — and without a media kit, brands are lowballing you. LoopLinq gives you a live dashboard to see exactly what's driving growth, and an auto-generated media kit that proves your value so you can command bigger deals.</p>
+    <div class="solution-tag">→ Analytics dashboard + auto-generated media kit</div>
+  </div>
+  <div class="pain-visual carousel-visual">
+    <div class="carousel-wrapper" id="carousel02">
+      <!-- Carousel tabs -->
+      <div class="carousel-tabs">
+        <button class="carousel-tab active" data-slide="0">Media Kit</button>
+        <button class="carousel-tab" data-slide="1">Analytics</button>
+      </div>
+      <!-- Slides -->
+      <div class="carousel-track">
+        <!-- Slide 1: Media Kit -->
+        <div class="carousel-slide active" data-index="0">
+          <div class="mk-card">
+            <div class="mk-header">
+              <div class="mk-avatar"><img src="images/img_1.jpg" alt="Alexa Rivera"></div>
+              <div class="mk-info">
+                <div class="mk-name">Alexa Rivera</div>
+                <div class="mk-handle">📷 @alex_creativ · 🌐 alexrivera.co</div>
+              </div>
+              <div class="mk-contact">✉ Contact</div>
+            </div>
+            <div class="mk-stats">
+              <div class="mk-stat">
+                <div class="mk-stat-icon" style="color:#E1306C;">📷</div>
+                <div class="mk-stat-val">124.5K</div>
+                <div class="mk-stat-label">IG Followers</div>
+              </div>
+              <div class="mk-stat">
+                <div class="mk-stat-icon" style="color:#FF0000;">▶</div>
+                <div class="mk-stat-val">256.2K</div>
+                <div class="mk-stat-label">YT Subscribers</div>
+              </div>
+              <div class="mk-stat">
+                <div class="mk-stat-icon" style="color:#6C63FF;">📈</div>
+                <div class="mk-stat-val">4.2%</div>
+                <div class="mk-stat-label">Engagement</div>
+              </div>
+              <div class="mk-stat">
+                <div class="mk-stat-icon" style="color:#6C63FF;">👥</div>
+                <div class="mk-stat-val">82%</div>
+                <div class="mk-stat-label">Audience 18-34</div>
+              </div>
+            </div>
+            <div class="mk-bottom">
+              <div class="mk-audience">
+                <div class="mk-section-title">Top Audience</div>
+                <div class="mk-bar-row"><span>USA</span><div class="mk-bar"><div class="mk-bar-fill" style="width:45%;"></div></div><span>45%</span></div>
+                <div class="mk-bar-row"><span>UK</span><div class="mk-bar"><div class="mk-bar-fill" style="width:22%;"></div></div><span>22%</span></div>
+                <div class="mk-bar-row"><span>Germany</span><div class="mk-bar"><div class="mk-bar-fill" style="width:15%;"></div></div><span>15%</span></div>
+              </div>
+              <div class="mk-partnerships">
+                <div class="mk-section-title">Past Partnerships</div>
+                <div class="mk-partner-grid">
+                  <div class="mk-partner"><svg viewBox="0 0 24 24" width="20" height="20" fill="#111"><path d="M12.77 11.07L7.85 4.5H3v15h4.23V11.93l4.92 6.57H17.23V4.5H12.77v6.57z"/></svg></div>
+                  <div class="mk-partner"><span style="color:#00D632;font-size:0.6rem;">Cash App</span></div>
+                  <div class="mk-partner"><span style="color:#D97757;font-size:0.6rem;">Claude</span></div>
+                  <div class="mk-partner"><span style="font-size:0.5rem;letter-spacing:0.08em;">LULULEMON</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 2: Analytics Dashboard -->
+        <div class="carousel-slide" data-index="1">
+          <div class="an-card">
+            <div class="an-nav">
+              <span class="an-nav-item active">Summary</span>
+              <span class="an-nav-item">Instagram</span>
+              <span class="an-nav-item">TikTok</span>
+              <span class="an-nav-item">YouTube</span>
+            </div>
+            <div class="an-header">
+              <div class="an-title">📊 Growth Analytics</div>
+              <div class="an-period">Last 30 Days</div>
+            </div>
+            <div class="an-metrics">
+              <div class="an-metric"><div class="an-metric-label">Total Reach <span class="an-up">↗ +12.5%</span></div><div class="an-metric-val">4.8M</div></div>
+              <div class="an-metric"><div class="an-metric-label">Engagement <span class="an-up">↗ +0.8%</span></div><div class="an-metric-val">5.2%</div></div>
+              <div class="an-metric"><div class="an-metric-label">Avg. Views <span class="an-down">↘ -2.1%</span></div><div class="an-metric-val">842K</div></div>
+              <div class="an-metric"><div class="an-metric-label">New Followers <span class="an-up">↗ +18.2%</span></div><div class="an-metric-val">12.4K</div></div>
+            </div>
+            <div class="an-chart-label">Cross-Platform Performance</div>
+            <div class="an-chart">
+              <div class="an-chart-group"><div class="an-bar" style="height:35%;background:#1a1a1a;"></div><div class="an-bar" style="height:20%;background:#6BCBB8;"></div><span>Mon</span></div>
+              <div class="an-chart-group"><div class="an-bar" style="height:45%;background:#1a1a1a;"></div><div class="an-bar" style="height:10%;background:#6BCBB8;"></div><span>Tue</span></div>
+              <div class="an-chart-group"><div class="an-bar" style="height:15%;background:#1a1a1a;"></div><div class="an-bar" style="height:85%;background:#6BCBB8;"></div><span>Wed</span></div>
+              <div class="an-chart-group"><div class="an-bar" style="height:40%;background:#1a1a1a;"></div><div class="an-bar" style="height:55%;background:#6BCBB8;"></div><span>Thu</span></div>
+              <div class="an-chart-group"><div class="an-bar" style="height:15%;background:#1a1a1a;"></div><div class="an-bar" style="height:45%;background:#6BCBB8;"></div><span>Fri</span></div>
+              <div class="an-chart-group"><div class="an-bar" style="height:25%;background:#1a1a1a;"></div><div class="an-bar" style="height:35%;background:#6BCBB8;"></div><span>Sat</span></div>
+              <div class="an-chart-group"><div class="an-bar" style="height:30%;background:#1a1a1a;"></div><div class="an-bar" style="height:95%;background:#6BCBB8;"></div><span>Sun</span></div>
+            </div>
+            <div class="an-top-content">
+              <div class="an-tc-title">🏆 Top Performing Content</div>
+              <div class="an-tc-grid">
+                <div class="an-tc-item"><div class="an-tc-thumb" style="background:#E8E0F0;"></div><div class="an-tc-meta">▶ 1.2M · ♡ 8.4%</div><div class="an-tc-name">10 Productivity Hacks</div></div>
+                <div class="an-tc-item"><div class="an-tc-thumb" style="background:#D8D0E8;"></div><div class="an-tc-meta">▶ 2.8M · ♡ 12.1%</div><div class="an-tc-name">Morning Routine</div></div>
+                <div class="an-tc-item"><div class="an-tc-thumb" style="background:#E0E8F0;"></div><div class="an-tc-meta">▶ 450K · ♡ 6.2%</div><div class="an-tc-name">Desk Setup Tour</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Dots -->
+      <div class="carousel-dots">
+        <span class="carousel-dot active" data-slide="0"></span>
+        <span class="carousel-dot" data-slide="1"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- STORY TRANSITION -->
+<section class="story-beat reveal">
+  <h2>Looplinq is something that <em>actually</em> works.</h2>
+  <p>A link-in-bio that's <em>rich and beautiful</em>. A platform that's <em>affordable</em>. And a creator hub that helps me <em>grow faster</em> and <em>monetize better</em>.</p>
+  <!-- Controls row -->
+  <div class="display-controls">
+    <div class="device-switcher" id="deviceSwitcher">
+      <button class="device-btn active" data-device="desktop">🖥 Desktop</button>
+      <button class="device-btn" data-device="mobile">📱 Mobile</button>
+    </div>
+    <div class="profile-carousel-nav" id="profileNav">
+      <div class="profile-dot active" data-profile="0">
+        <div class="profile-dot-avatar" style="background: linear-gradient(135deg, #E8A0C0, #A0C8E8);"></div>
+        <span>Helen M</span>
+      </div>
+      <div class="profile-dot" data-profile="1">
+        <div class="profile-dot-avatar" style="background: linear-gradient(135deg, #FF8C00, #CC6600);"></div>
+        <span>Curtis J</span>
+      </div>
+      <div class="profile-dot" data-profile="2">
+        <div class="profile-dot-avatar" style="background: linear-gradient(135deg, #C8A0E8, #A080C8);"></div>
+        <span>Profile 3</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Desktop view -->
+  <div class="device-view active" id="desktopView">
+    <div class="monitor-frame">
+      <div class="monitor-bezel">
+        <div class="monitor-top-bar">
+          <div class="monitor-dots"><span></span><span></span><span></span></div>
+          <div class="monitor-url-bar">
+            <span class="lock-icon">🔒</span>
+            <span class="url-text">looplinq.com/helenm</span>
+          </div>
+        </div>
+        <div class="monitor-screen-wrap">
+          <div class="monitor-screen">
+            <div class="profile-slides desktop-slides">
+              <img class="profile-slide active" data-profile="0" src="images/img_4.png" alt="Helen M - LoopLinq" style="width:100%;height:100%;object-fit:cover;object-position:top left;display:block;">
+              <div class="profile-slide" data-profile="1">
+                <img src="images/img_5.png" alt="Curtis J - LoopLinq" style="width:100%;height:100%;object-fit:cover;object-position:top left;display:block;">
+              </div>
+              <div class="profile-slide profile-placeholder" data-profile="2">
+                <div class="placeholder-content">
+                  <div class="placeholder-icon">📸</div>
+                  <div class="placeholder-text">Profile 3 Desktop Screenshot</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="monitor-stand"></div>
+      <div class="monitor-base"></div>
+    </div>
+  </div>
+
+  <!-- Mobile view -->
+  <div class="device-view" id="mobileView">
+    <div class="mobile-phone-frame">
+      <div class="mp-notch"></div>
+      <div class="mp-screen">
+        <div class="profile-slides mobile-slides">
+          <div class="profile-slide active" data-profile="0" style="width:100%;height:100%;overflow:hidden;">
+              <img src="images/img_6.png" alt="Helen M - LoopLinq Mobile" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;">
+            </div>
+            <div class="profile-slide" data-profile="1" style="width:100%;height:100%;overflow:hidden;">
+            <img src="images/img_9.JPG" alt="Curtis J - LoopLinq Mobile" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;">
+          </div>
+          <div class="profile-slide profile-placeholder" data-profile="2">
+            <div class="placeholder-content">
+              <div class="placeholder-icon">📸</div>
+              <div class="placeholder-text">Profile 3 Mobile</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-simple reveal" id="pricing">
+  <h2>Simple pricing. No surprises.</h2>
+  <p class="pricing-sub">Everything you need to run your creator business.</p>
+  <!-- Pricing toggle -->
+  <div class="pricing-toggle" id="pricingToggle">
+    <span class="toggle-label active" data-plan="monthly">Monthly</span>
+    <div class="toggle-switch" id="toggleSwitch">
+      <div class="toggle-knob"></div>
+    </div>
+    <span class="toggle-label" data-plan="annual">Annual <span class="toggle-save">Save 20%</span></span>
+  </div>
+  <div class="price-card">
+    <div class="price-amount">
+      <span class="dollar">$</span>
+      <span class="number" id="priceNumber">14</span>
+      <span class="period" id="pricePeriod">/mo</span>
+    </div>
+    <div class="price-annual-note" id="annualNote"></div>
+    <div class="price-tagline">Free for 45 days. Keep and run your page <em>forever</em>.</div>
+    <ul class="price-features">
+      <li>Custom link-in-bio with premium design</li>
+      <li>Creator analytics dashboard</li>
+      <li>Auto-generated media kit</li>
+      <li>Digital product storefront</li>
+      <li>Calendar booking &amp; scheduling</li>
+      <li>Brand deal matchmaking</li>
+      <li>Payment processing built in</li>
+      <li>Courses, memberships &amp; community</li>
+    </ul>
+    <button class="btn-primary">Start Free for 45 Days</button>
+  </div>
+</section>
+
+<!-- TRANSFORMATION -->
+<section class="transformation reveal">
+  <div class="story-label">The transformation</div>
+  <h2>From scattered to <em>streamlined.</em><br>From invisible to <em>undeniable.</em></h2>
+  <div class="transformation-story">
+    <p>"I was <em>juggling five platforms</em> and still couldn't tell brands what my content was worth. I felt <em>overwhelmed and underpaid.</em> Then I realized I didn't need more tools — I needed one that actually worked for creators. So I started using LoopLinq. Now <em>my brand deals are bigger, my storefront converts, and I finally look as professional as my content.</em>"</p>
+  </div>
+  <div class="stat-row">
+    <div class="stat-item">
+      <div class="stat-val">$500 → $2,500</div>
+      <div class="stat-label">Avg. deal value increase</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">5x</div>
+      <div class="stat-label">Fewer tools to manage</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">3 min</div>
+      <div class="stat-label">Setup time</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <h2>Your audience is already clicking. <em>Give them somewhere worth landing.</em></h2>
+  <p>Claim your LoopLinq link today. Free for 90 days — no credit card required.</p>
+  <div class="claim-input-group">
+    <input type="text" placeholder="looplinq.com/yourname">
+    <button class="btn-primary">Claim</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">loop<span>linq</span></div>
+  <p>© 2026 LoopLinq. Built for creators.</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav scroll state
+  const nav = document.getElementById('mainNav');
+  const scrollProgress = document.getElementById('scrollProgress');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+    // Update progress bar
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrolled = (window.scrollY / docHeight) * 100;
+    scrollProgress.style.width = scrolled + '%';
+  });
+
+  // Carousel
+  document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
+    const tabs = wrapper.querySelectorAll('.carousel-tab');
+    const dots = wrapper.querySelectorAll('.carousel-dot');
+    const slides = wrapper.querySelectorAll('.carousel-slide');
+
+    function goTo(index) {
+      slides.forEach(s => s.classList.remove('active'));
+      tabs.forEach(t => t.classList.remove('active'));
+      dots.forEach(d => d.classList.remove('active'));
+      slides[index].classList.add('active');
+      tabs[index].classList.add('active');
+      dots[index].classList.add('active');
+    }
+
+    tabs.forEach(tab => tab.addEventListener('click', () => goTo(+tab.dataset.slide)));
+    dots.forEach(dot => dot.addEventListener('click', () => goTo(+dot.dataset.slide)));
+  });
+
+  // Profile carousel (monitor + mobile)
+  const profileDots = document.querySelectorAll('.profile-dot');
+  const allProfileSlides = document.querySelectorAll('.profile-slide');
+
+  profileDots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const idx = dot.dataset.profile;
+      profileDots.forEach(d => d.classList.remove('active'));
+      allProfileSlides.forEach(s => s.classList.remove('active'));
+      dot.classList.add('active');
+      document.querySelectorAll(`.profile-slide[data-profile="${idx}"]`).forEach(s => s.classList.add('active'));
+    });
+  });
+
+  // Device switcher (desktop / mobile)
+  const deviceBtns = document.querySelectorAll('.device-btn');
+  const deviceViews = document.querySelectorAll('.device-view');
+
+  deviceBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      deviceBtns.forEach(b => b.classList.remove('active'));
+      deviceViews.forEach(v => v.classList.remove('active'));
+      btn.classList.add('active');
+      const device = btn.dataset.device;
+      document.getElementById(device === 'desktop' ? 'desktopView' : 'mobileView').classList.add('active');
+    });
+  });
+
+  // Pricing toggle
+  const toggleSwitch = document.getElementById('toggleSwitch');
+  const toggleLabels = document.querySelectorAll('.toggle-label');
+  const priceNumber = document.getElementById('priceNumber');
+  const pricePeriod = document.getElementById('pricePeriod');
+  const annualNote = document.getElementById('annualNote');
+  let isAnnual = false;
+
+  function updatePricing() {
+    if (isAnnual) {
+      toggleSwitch.classList.add('annual');
+      priceNumber.textContent = '11';
+      pricePeriod.textContent = '/mo';
+      annualNote.textContent = 'Billed $132/year';
+      toggleLabels[0].classList.remove('active');
+      toggleLabels[1].classList.add('active');
+    } else {
+      toggleSwitch.classList.remove('annual');
+      priceNumber.textContent = '14';
+      pricePeriod.textContent = '/mo';
+      annualNote.textContent = '';
+      toggleLabels[1].classList.remove('active');
+      toggleLabels[0].classList.add('active');
+    }
+  }
+
+  toggleSwitch.addEventListener('click', () => { isAnnual = !isAnnual; updatePricing(); });
+  toggleLabels.forEach(label => label.addEventListener('click', () => {
+    isAnnual = label.dataset.plan === 'annual';
+    updatePricing();
+  }));
+</script>
+
 </body>
 </html>
